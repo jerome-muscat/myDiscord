@@ -16,139 +16,139 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `Privilege`
+-- Table structure for table `categorie`
 --
 
-DROP TABLE IF EXISTS `Privilege`;
+DROP TABLE IF EXISTS `categorie`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Privilege` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nom` ENUM('Proprietaire', 'admin', 'membre'),
+CREATE TABLE `categorie` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nom` int NOT NULL,
+  `id_room` int NOT NULL,
+  `id_user` int NOT NULL,
   PRIMARY KEY (`id`),
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Privilege`
---
-
-LOCK TABLES `Privilege` WRITE;
-/*!40000 ALTER TABLE `Privilege` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Privilege` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Utilisateur`
---
-
-DROP TABLE IF EXISTS `Utilisateur`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Utilisateur` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nom` TEXT NOT NULL,
-  `prenom` TEXT NOT NULL,
-  `email` TEXT NOT NULL,
-  `mdp` TEXT NOT NULL,
-  `pseudo` TEXT NOT NULL,
-  `age` INT NOT NULL,
-  `id_privilege` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_privilege` (`id_privilege`),
-  CONSTRAINT `Utilisateur_ibfk_1` FOREIGN KEY (`id_privilege`) REFERENCES `Privilege` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Utilisateur`
---
-
-LOCK TABLES `Utilisateur` WRITE;
-/*!40000 ALTER TABLE `Utilisateur` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Utilisateur` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Categorie`
---
-
-DROP TABLE IF EXISTS `Categorie`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Categorie` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nom` TEXT NOT NULL,
-  `id_room` INT NOT NULL,
-  `id_user` INT NOT NULL,
-  PRIMARY KEY (`id`),
+  KEY `id_room` (`id_room`),
   KEY `id_user` (`id_user`),
-  CONSTRAINT `Categorie_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `Utilisateur` (`id`)
+  CONSTRAINT `categorie_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `utilisateur` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Categorie`
+-- Dumping data for table `categorie`
 --
 
-LOCK TABLES `Categorie` WRITE;
-/*!40000 ALTER TABLE `Categorie` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Categorie` ENABLE KEYS */;
+LOCK TABLES `categorie` WRITE;
+/*!40000 ALTER TABLE `categorie` DISABLE KEYS */;
+/*!40000 ALTER TABLE `categorie` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Salon`
+-- Table structure for table `message`
 --
 
-DROP TABLE IF EXISTS `Salon`;
+DROP TABLE IF EXISTS `message`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Salon` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nom` TEXT NOT NULL,
-  `id_message` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id` (`id`),
-  CONSTRAINT `Salon_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Categorie` (`id_room`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Salon`
---
-
-LOCK TABLES `Salon` WRITE;
-/*!40000 ALTER TABLE `Salon` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Salon` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Message`
---
-
-DROP TABLE IF EXISTS `Message`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Message` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `text` TEXT NOT NULL,
-  `id_utilisateur` INT NOT NULL,
-  `date` DATETIME NOT NULL,
+CREATE TABLE `message` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `text` text NOT NULL,
+  `id_utilisateur` int NOT NULL,
+  `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_utilisateur` (`id_utilisateur`),
-  CONSTRAINT `Message_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `Utilisateur` (`id`),
-  KEY `id` (`id`),
-  CONSTRAINT `Message_ibfk_2` FOREIGN KEY (`id`) REFERENCES `Salon` (`id_message`)
+  CONSTRAINT `message_ibfk_1` FOREIGN KEY (`id`) REFERENCES `salon` (`id_message`),
+  CONSTRAINT `message_ibfk_2` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Message`
+-- Dumping data for table `message`
 --
 
-LOCK TABLES `Message` WRITE;
-/*!40000 ALTER TABLE `Message` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Message` ENABLE KEYS */;
+LOCK TABLES `message` WRITE;
+/*!40000 ALTER TABLE `message` DISABLE KEYS */;
+/*!40000 ALTER TABLE `message` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `privilege`
+--
+
+DROP TABLE IF EXISTS `privilege`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `privilege` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nom` enum('Proprietaire','admin','membre') DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `privilege`
+--
+
+LOCK TABLES `privilege` WRITE;
+/*!40000 ALTER TABLE `privilege` DISABLE KEYS */;
+/*!40000 ALTER TABLE `privilege` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `salon`
+--
+
+DROP TABLE IF EXISTS `salon`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `salon` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nom` text NOT NULL,
+  `id_message` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_message` (`id_message`),
+  CONSTRAINT `salon_ibfk_1` FOREIGN KEY (`id`) REFERENCES `categorie` (`id_room`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `salon`
+--
+
+LOCK TABLES `salon` WRITE;
+/*!40000 ALTER TABLE `salon` DISABLE KEYS */;
+/*!40000 ALTER TABLE `salon` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `utilisateur`
+--
+
+DROP TABLE IF EXISTS `utilisateur`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `utilisateur` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nom` text NOT NULL,
+  `prenom` text NOT NULL,
+  `email` text NOT NULL,
+  `mdp` text NOT NULL,
+  `pseudo` text NOT NULL,
+  `age` int NOT NULL,
+  `id_privilege` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_privilege` (`id_privilege`),
+  CONSTRAINT `utilisateur_ibfk_1` FOREIGN KEY (`id_privilege`) REFERENCES `privilege` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `utilisateur`
+--
+
+LOCK TABLES `utilisateur` WRITE;
+/*!40000 ALTER TABLE `utilisateur` DISABLE KEYS */;
+/*!40000 ALTER TABLE `utilisateur` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -160,4 +160,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-21 10:30:30
+-- Dump completed on 2023-04-21 11:23:58
