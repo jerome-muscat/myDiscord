@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `categorie`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `categorie` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nom` int NOT NULL,
+  `nom` text NOT NULL,
   `id_room` int NOT NULL,
   `id_user` int NOT NULL,
   PRIMARY KEY (`id`),
